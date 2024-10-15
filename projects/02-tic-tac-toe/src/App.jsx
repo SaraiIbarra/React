@@ -13,6 +13,7 @@ function App() {
     if(boardFromStorage) return JSON.parse(boardFromStorage)
     return Array(9).fill(null)
   })
+  
   //tablero vacio
   const [turn, setTurn] = useState(() => {
     const turnFromStorage = window.localStorage.getItem('turn')
