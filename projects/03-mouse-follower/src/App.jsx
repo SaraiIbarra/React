@@ -10,7 +10,7 @@ const FollowMouse = () => {
 
     const handleMove = (event) => {
       const {clientX, clientY} = event
-      console.log('handleMove', {clientX, clientY})
+      //console.log('handleMove', {clientX, clientY})
       setPosition({x: clientX, y: clientY})
     }
 
