@@ -11,5 +11,5 @@ export function useCatFat () {
     //para recuperar la cita al cargar la pagina
     useEffect(refreshFact, [])
 
-    return (fact, refreshFact)
+    return {fact, refreshFact}
 }
