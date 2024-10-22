@@ -17,7 +17,8 @@ export function useCatImage ({fact}) {
         fetch(`https://cataas.com/cat/says/${threeFirstWords}?size=50&color=red&json=true`)
         .then(res => res.json()) //respuesta 
         .then(response => {
-            const {url} = response
+            const {_id} = response
+            const url = `/cat/${_id}/says/${threeFirstWords}`
             SetImageUrl(url)
         })
     }, [fact])
