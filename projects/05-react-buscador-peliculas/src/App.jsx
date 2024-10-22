@@ -37,20 +37,21 @@ function useSearch(){
 }
 
 function App() {
-  const {movies} = useMovies()
-  //const [query, setQuery] = useState('')
   const {search, updateSearch, error} = useSearch()
+  const {movies, getMovies} = useMovies({search})
+  //const [query, setQuery] = useState('')
 
-  const counter = useRef(0) //valor que persiste entre renders
+  /* const counter = useRef(0) //valor que persiste entre renders
   counter.current++
-  console.log(counter.current)
+  console.log(counter.current) */
 
   const handleSubmit = (event) => {
     event.preventDefault()
     //forma no controlada
     //const {query} = Object.fromEntries(
       //new window.FormData(event.target))
-    console.log({search})
+    //console.log({search})
+    getMovies()
   }
 
   const handleChange = (event) => {
