@@ -1,12 +1,12 @@
-function ListOfMovies ({movies}) {
-    return(
-        <ul className='movies'>
+function ListOfMovies ({ movies }) {
+    return(        
+        <ul className="movies">
             {
                 movies.map(movie => (
-                    <li className='movie' key={movie.id}>
+                    <li className="movie" key={movie.id}>
                         <h3>{movie.title}</h3>
                         <p>{movie.year}</p>
-                        <img src={movie.image} alt={movie.title} />
+                        <img src={movie.image} alt={movie.title}/>
                     </li>
                 ))
             }
@@ -16,7 +16,7 @@ function ListOfMovies ({movies}) {
 
 function NoMoviesResults () {
     return(
-        <p>No se encontraron peliculas para esta búsqueda</p>
+        <p>No se encontraron películas para esta búsqueda</p>
     )
 }
 

@@ -33,12 +33,13 @@ function useSearch(){
   
   },[search])
 
-  return [search, updateSearch, error]
+  return {search, updateSearch, error}
 }
 
 function App() {
+  const [sort, setSort] = useState(false)
   const {search, updateSearch, error} = useSearch()
-  const {movies, getMovies} = useMovies({search})
+  const {movies, loading, getMovies} = useMovies({search})
   //const [query, setQuery] = useState('')
 
   /* const counter = useRef(0) //valor que persiste entre renders
@@ -51,11 +52,17 @@ function App() {
     //const {query} = Object.fromEntries(
       //new window.FormData(event.target))
     //console.log({search})
-    getMovies()
+    getMovies({ search })
+  }
+
+  const handleSort = () => {
+    setSort(!sort) //sort - para ordenar
   }
 
   const handleChange = (event) => {
-    updateSearch(event.target.value) //actualizar el estado
+    const newSearch = event.target.value
+    updateSearch(newSearch) //actualizar el estado
+    getMovies({ search: newSearch })
   }
 
   return (
@@ -64,14 +71,19 @@ function App() {
       <header>
         <h1>Buscador de películas</h1>
         <form className='form' onSubmit={handleSubmit}>
-          <input onChange={handleChange} value={search} name='query' placeholder='Avengers, Star Wars, The Matrix, ...'/>
-          <button type='submit'>Buscar</button>    
+          <input style={{
+            border: '1px solid transparent', borderColor: error ? 'red': 'transparent'}} onChange={handleChange} value={search} name='query' placeholder='Avengers, Star Wars, The Matrix, ...'/>
+          <input type='checkbox' onChange={handleSort} checked={sort}
+          ></input>
+          <button type='submit'>Buscar</button>              
         </form>  
         {error && <p style={{color: 'red'}}>{error}</p>}
       </header>
 
       <main>
-        <Movies movies={movies}/>     
+        {
+          loading ? <p>Cargando ...</p> : <Movies movies={movies}/>   
+        }          
       </main>
     </div>
   )
