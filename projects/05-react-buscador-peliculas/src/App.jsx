@@ -1,7 +1,7 @@
 import './App.css'
 import { useMovies } from './hooks/useMovies.js'
 import { Movies } from './components/Movies.jsx'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import debounce from 'just-debounce-it'
 
 function useSearch(){
