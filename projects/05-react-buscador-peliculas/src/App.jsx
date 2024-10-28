@@ -47,7 +47,6 @@ function App() {
   counter.current++
   console.log(counter.current) */
 
-
   const debounceGetMovies = useCallback( 
     debounce(search => {
       console.log('search', search)
@@ -83,9 +82,11 @@ function App() {
         <h1>Buscador de películas</h1>
         <form className='form' onSubmit={handleSubmit}>
           <input style={{
-            border: '1px solid transparent', borderColor: error ? 'red': 'transparent'}} onChange={handleChange} value={search} name='query' placeholder='Avengers, Star Wars, The Matrix, ...'/>
-          <input type='checkbox' onChange={handleSort} checked={sort}
-          ></input>
+            border: '1px solid transparent', 
+            borderColor: error ? 'red': 'transparent'}} 
+            onChange={handleChange} value={search} name='query' placeholder='Avengers, Star Wars, The Matrix, ...'
+          />
+          <input type='checkbox' onChange={handleSort} checked={sort} />
           <button type='submit'>Buscar</button>              
         </form>  
         {error && <p style={{color: 'red'}}>{error}</p>}
