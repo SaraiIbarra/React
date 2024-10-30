@@ -1,34 +1,42 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { useEffect } from 'react'
+import { EVENTS } from './consts'
+import HomePage from './pages/Home.jsx'
+import AboutPage from './pages/About.jsx'
+
+export function navigate (href) {
+  window.history.pushState({}, '', href)
+  //Crear un evento personalizado
+  const navigationEvent = new Event(EVENTS.PUSHSTATE)
+  //Enviar el evento
+  window.dispatchEvent(navigationEvent)
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  //tecnica del renderizado condicional
+  const [currentPath, setCurrentPath] = useState(window.location.pathname)
 
+  useEffect(() => {
+    const onLocationChange = () => {
+      setCurrentPath(window.location.pathname)
+    }
+
+    window.addEventListener(EVENTS.PUSHSTATE, onLocationChange)
+    //popstate cuando se regresa a la pagina con el boton 'atras'
+    window.addEventListener(EVENTS.POPSTATE, onLocationChange)
+
+    return () => {
+      window.removeEventListener(EVENTS.PUSHSTATE, onLocationChange)
+      window.removeEventListener(EVENTS.POPSTATE, onLocationChange)
+    }
+  }, [])
+  
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <main>
+      {currentPath === '/' && <HomePage/>}
+      {currentPath === '/about' && <AboutPage/>}
+    </main>
   )
 }
 
