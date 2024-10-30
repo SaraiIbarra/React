@@ -1,9 +1,33 @@
 import './Cart.css'
 import { useId } from 'react'
-import { CartIcon, ClearCartIcon, RemoveFromCartIcon } from './Icons.jsx'
+import { CartIcon, ClearCartIcon} from './Icons.jsx'
+import { useCart } from '../hooks/useCart.js'
+
+function CartItem ({ thumbnail, price, title, quantity, addToCart}) {
+    return(
+        <li>
+            <img 
+                src={thumbnail}
+                alt={title}
+            />
+            <div>
+                <strong>{title}</strong> - ${price}
+            </div>
+
+            <footer>
+                <small>
+                    Qty: {quantity}
+                </small>
+                <button onClick={addToCart}>+</button>
+            </footer>
+        </li>    
+    )
+}
 
 export function Cart () {
     const cartCheckboxId = useId()
+    const {cart, clearCart, addToCart} = useCart()
+
     return (
         <>
             <label className='cart-button' htmlFor={cartCheckboxId}>
@@ -12,26 +36,17 @@ export function Cart () {
             <input id={cartCheckboxId} type='checkbox' hidden />
             <aside className='cart'>
                 <ul>
-                    <li>
-                        <img 
-                            src='https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/thumbnail.png'
-                            alt='fragances'
+                    {cart.map(product => (
+                        <CartItem
+                            key={product.id}
+                            addToCart={() => addToCart(product)}
+                            {...product}
                         />
-                        <div>
-                            <strong>Fragancia</strong> - $1499
-                        </div>
-
-                        <footer>
-                            <small>
-                                Qty: 1
-                            </small>
-                            <button>+</button>
-                        </footer>
-                    </li>                    
+                    ))}              
                 </ul>
 
-                <button>
-                    <ClearCartIcon/>
+                <button onClick={clearCart}>
+                    <ClearCartIcon />
                 </button>
             </aside>
         </>
