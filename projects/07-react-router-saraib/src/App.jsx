@@ -1,6 +1,5 @@
 import './App.css'
-import { Component, lazy, Suspense } from 'react'
-import HomePage from './pages/Home.jsx'
+import { lazy, Suspense } from 'react'
 import Page404 from './pages/404.jsx'
 import SearchPage from './pages/Search.jsx'
 import { Router } from './components/Router.jsx'

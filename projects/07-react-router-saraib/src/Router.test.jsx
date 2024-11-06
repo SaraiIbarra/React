@@ -6,7 +6,7 @@ import { Link } from "./components/Link.jsx";
 import { getCurrentPath } from "./utils/getCurrentPath.js";
 
 //mockear
-vi.mock('./utils.js', () => ({
+vi.mock('./utils/getCurrentPath.js', () => ({
     //getCurrentPath: () => '/'
     getCurrentPath: vi.fn()
 }))
