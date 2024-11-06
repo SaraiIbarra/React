@@ -1,1 +1,6 @@
 src
+public
+index.html
+vite.config.js
+.swcrc
+
