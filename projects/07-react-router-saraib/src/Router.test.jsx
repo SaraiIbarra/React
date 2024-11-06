@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach, vi} from "vitest";
 import { cleanup, fireEvent, render, screen} from "@testing-library/react";
 import { Router } from "./components/Router.jsx";
-import { Route } from "./Route.jsx";
+import { Route } from "./components/Route.jsx";
 import { Link } from "./components/Link.jsx";
-import { getCurrentPath } from "./utils.js";
+import { getCurrentPath } from "./utils/getCurrentPath.js";
 
 //mockear
 vi.mock('./utils.js', () => ({
