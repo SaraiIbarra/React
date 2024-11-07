@@ -1,34 +1,83 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
+import { useReducer } from 'react'
+import { Action, State } from './types'
+
+// 1. Create a initialState
+const initialState: State = {
+  fromLanguage: 'auto',
+  toLanguage: 'en',
+  fromText: '',
+  result: '',
+  loading: false
+}
+
+// 2. Create a reducer
+function reducer(state: State, action: Action) {
+  const {type} = action
+
+  if(type === 'INTERCHANGE_LANGUAGES') {
+    //generar un nuveo estado donde se intercambia el idioma
+    return{
+      ...state,
+      fromLanguage: state.toLanguage,
+      toLanguage: state.fromLanguage
+    }
+  }
+
+  if(type === 'SET_FROM_LANGUAGE') {
+    return{
+      ...state,
+      fromLanguage: action.payload,
+    }
+  }
+
+  if(type === 'SET_TO_LANGUAGE') {
+    return{
+      ...state,
+      toLanguage: action.payload,
+    }
+  }
+
+  if(type === 'SET_FROM_TEXT') {
+    return {
+      ...state,
+      loading: true,
+      fromText: action.payload,
+      result: ''
+    }
+  }
+
+  if(type === 'SET_RESULT') {
+    return {
+      ...state,
+      loading: false,
+      result: action.payload
+    }
+  }  
+
+  return state
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  // 3. Usar el hook useReducer
+  const [{
+    fromLanguage,
+    toLanguage,
+    fromText,
+    result,
+    loading
+  }, dispatch] = useReducer(reducer, initialState)
 
+  console.log({fromLanguage})
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className='App'>
+      <h1>Google Translate</h1>
+      <button onClick={() => {
+        dispatch({type: 'SET_FROM_LANGUAGE', payload: 'es'})
+      }}>Cambiar a Español</button>
+    </div>
+      
   )
 }
 
